@@ -1,20 +1,23 @@
 <section class="login flex justify-center">
     <div class="w-full max-w-xs mt-24">
-        <form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+        <form action="/login" method="POST" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+          <% if(messages.error) { %>
+            <span class="text-red-500 text-sm"><%= messages.error %></span>
+            <% } %>
           <div class="mb-4">
             <label class="block text-gray-700 text-sm font-bold mb-2" for="emailId">
               Email Id
             </label>
-            <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="emailId" type="email" placeholder="Email Id">
+            <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="emailId" type="email" name="email" placeholder="Email Id">
           </div>
           <div class="mb-6">
             <label class="block text-gray-700 text-sm font-bold mb-2" for="password">
               Password
             </label>
-            <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" id="password" type="password" placeholder="Password">
+            <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" id="password" type="password" name="password" placeholder="Password">
           </div>
           <div class="flex items-center justify-between">
-            <button class="btn-primary text-white rounded-full px-6 py-2 font-bold">
+            <button class="btn-primary bg-stone-400 text-white rounded-full px-6 py-2 font-bold" type="submit">
               Login
             </button>
             <a class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800" href="/register">

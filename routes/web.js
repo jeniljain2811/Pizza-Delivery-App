@@ -1,7 +1,8 @@
 //const homeController = require('../app/http/controllers/homeController')
 const { index } = require('../app/http/controllers/homeController')()
-const { login , register } = require('../app/http/controllers/authController')()
+const { login , postLogin , register , postRegister , logout } = require('../app/http/controllers/authController')()
 const { cart , updateCart } = require('../app/http/controllers/customer/cartController')()
+const guest = require('../app/http/middlewares/guest')
 
 const initRoutes = (app) => {
     app.get('/' , index)
@@ -11,9 +12,15 @@ const initRoutes = (app) => {
     //     res.render('home')
     // }
     
-    app.get('/login', login)
+    app.get('/login', guest, login)
+
+    app.post('/login', postLogin)
     
-    app.get('/register', register)
+    app.get('/register', guest, register)
+
+    app.post('/register' , postRegister)
+
+    app.post('/logout', logout)
 
     app.get('/cart' , cart)
 

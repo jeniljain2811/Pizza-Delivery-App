@@ -290,6 +290,10 @@ section.hero {
   border: 2px solid #fe5f1e;
 }
 
+.register-btn {
+  background: #fe5f1e;
+}
+
 section.cart {
   background: #f8f8f8;
 }
