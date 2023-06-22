@@ -32,25 +32,28 @@
                 <span class="text-xl font-bold">Total Amount: </span>
                 <span class="text-2xl font-bold ml-4 total-amt">₹<%= session.cart.totalPrice %></span>
             </div>
+            <% if(user) { %> <!-- we are directly getting to know that if user is logged in with (if(user)) , we are getting it from session as we have stored user into session using passport.serialieUser -->
             <div>
-                <form action="" class="mt-8 py-2">
-                    <input class="border border-gray-400 p-2 w-1/2 mb-2" type="text" placeholder="Phone Number">
-                    <input class="border border-gray-400 p-2 w-1/2 mb-2" type="text" placeholder="Address">
-                    <!-- <div>
-                        <button class="btn-primary text-white rounded-full px-6 py-2 font-bold">Order Now</button>
-                    </div> -->
+                <form action="/orders" method="POST" class="mt-8 py-2">
+                    <input class="border border-gray-400 p-2 w-1/2 mb-2" type="text" name="phone" placeholder="Phone Number">
+                    <input class="border border-gray-400 p-2 w-1/2 mb-2" type="text" name="address" placeholder="Address"><br>
+                    <!-- <div> -->
+                        <button class="btn-primary bg-stone-400 text-white rounded-full px-6 py-2 font-bold" type="submit">Order Now</button>
+                    <!-- </div> -->
                 </form>
             </div>
-            <a href=""><button class="btn-primary text-white rounded-full px-6 py-2 font-bold">Login To Continue..</button></a>
+            <% } else { %>
+                <a href="/login"><button class="btn-primary text-white rounded-full px-6 py-2 font-bold">Login To Continue..</button></a>   
+            <% } %>
         </div>
     </div>
 
     <% } else { %>
 
-    <div class="empty-cart py-12">
+    <div class="empty-cart py-2">
         <div class="container mx-auto text-center">
             <h1 class="text-3xl font-bold mb-2">Cart Empty 🙁</h1>
-            <p class="text-lg text-gray-500 mb-12">You probably haven't orderd a pizza yet.<br> 
+            <p class="text-lg text-gray-500 mb-8">You probably haven't orderd a pizza yet.<br> 
                 To order a pizza go to Menu Page</p>
             <img class="w-2/6 mx-auto" src="/img/empty-cart.png" alt="empty-cart">
             <button class="px-6 py-2 btn-primary rounded-full text-white font-bold mt-12"><a href="/">Go Back</a></button>
