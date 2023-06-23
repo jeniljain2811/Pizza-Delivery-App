@@ -2,8 +2,9 @@
 const { index } = require('../app/http/controllers/homeController')()
 const { login , postLogin , register , postRegister , logout } = require('../app/http/controllers/authController')()
 const { cart , updateCart } = require('../app/http/controllers/customer/cartController')()
-const { store, allOrders } = require('../app/http/controllers/customer/orderController')()
+const { store, allOrders, showStatus } = require('../app/http/controllers/customer/orderController')()
 const { adminOrders } = require('../app/http/controllers/admin/orderController')()
+const { updateStatus } = require('../app/http/controllers/admin/statusController')()
 const guest = require('../app/http/middlewares/guest')
 const auth = require('../app/http/middlewares/auth')
 const admin = require('../app/http/middlewares/admin')
@@ -33,9 +34,13 @@ const initRoutes = (app) => {
     app.post('/orders' , auth , store)
 
     app.get('/customer/orders', auth , allOrders)
+    
+    app.get('/customer/orders/:id', auth , showStatus)
 
     //Admin routes
     app.get('/admin/orders' , admin , adminOrders)
+
+    app.post('/admin/order/status', admin , updateStatus)
     
 }
 

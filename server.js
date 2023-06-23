@@ -8,11 +8,18 @@ const session = require('express-session')
 const flash = require('express-flash')
 const MongoDBStore = require('connect-mongo')
 const passport = require('passport')
+const Emitter = require('events')
 
 const PORT = process.env.PORT || 3003
 
 //Database Connection
 connectDB()
+
+//Event Emitter
+const eventEmitter = new Emitter()
+//now we have to use same instance of emitter to send and receive events
+//for this we can bind our express server with the eventEmitter 
+app.set('eventEmitter', eventEmitter)
 
 //Session Config
 app.use(session({
@@ -56,6 +63,26 @@ app.set('view engine' , 'ejs')
 
 require('./routes/web')(app)
 
-app.listen(PORT , ()=>{
+
+const http = require('http').createServer(app)
+//Socket Connection
+const io = require('socket.io')(http)
+io.on('connection', (socket)=>{
+    //Join
+    socket.on('join', (roomName)=>{  //activates when a join message is received on server (from app.js(client side))
+        socket.join(roomName)    //joins the room with roomName = order_orderId as passed from client side(app.js)
+    })
+})
+
+eventEmitter.on('orderUpdated', (data)=>{  //eventEmitter('eventToBeListened' , (dataReceived)=>{})
+    io.to(`order_${data.id}`).emit('orderUpdated', data)  //io.to(roomName).emitMessage('messageName', dataToSend)
+})
+
+eventEmitter.on('orderPlaced', (data)=>{
+    io.to('adminRoom').emit('orderPlaced', data)
+})
+
+
+http.listen(PORT , ()=>{
     console.log(`Server on port ${PORT}`);
 })

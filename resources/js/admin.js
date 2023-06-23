@@ -1,7 +1,8 @@
 const axios = require('axios')
 const moment = require('moment')
+import Noty from "noty"
 
-export function initAdmin() {
+export function initAdmin(socket) {
     const orderTableBody = document.querySelector('#orderTableBody')
     let orders = []
     let markup
@@ -76,4 +77,20 @@ export function initAdmin() {
         `
         }).join('')
     }
+
+
+    socket.on('orderPlaced', (data)=>{
+        new Noty({
+            type: 'success',
+            timeout: 1000,
+            text: "New Order..",
+            layout: 'topLeft'
+          }).show()
+
+          //pushing the new order at the start of orders array which we are getting from axios.getAll()
+          orders.unshift(data)
+          //emptying the whole table body
+          orderTableBody.innerHTML = ''
+          orderTableBody.innerHTML = generateMarkup(orders)
+    })
 }
