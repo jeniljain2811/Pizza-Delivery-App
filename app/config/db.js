@@ -15,4 +15,3 @@ function connectDB() {
 module.exports = connectDB
 
 //imported data of menu from pizza-menu.json using below command
-//mongoimport mongodb+srv://Rahul:vyE7UaJPPADluwBK@cluster0.al2l3ze.mongodb.net/pizza --collection menus --jsonArray pizza-menu.json
