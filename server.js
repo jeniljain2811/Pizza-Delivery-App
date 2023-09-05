@@ -40,7 +40,7 @@ app.use(passport.session())
 
 app.use(flash())
 
-//Ststic Assets
+//Static Assets
 app.use(express.static(__dirname + '/public'))
 
 //to access form data
